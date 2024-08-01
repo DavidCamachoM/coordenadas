@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Coordenadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Fondo negro con opacidad */
+            z-index: -2; /* Capa negra detrás del desenfoque */
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://c.wallhere.com/photos/8e/a9/minimalism_dark_mathematics_formula-255256.jpg!d') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(10px); /* Aplica el desenfoque */
+            z-index: -1; /* Fondo desenfocado detrás del contenido */
+        }
+
+        .container {
+            background-color: rgba(51, 51, 51, 0.9); /* Fondo semi-transparente */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+            z-index: 1; /* Asegura que el contenedor esté por encima del fondo */
+        }
+
+        h1 {
+            color: #ffffff;
+        }
+        h2 {
+            color:rgba(255, 255, 255, 1)
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #777;
+        }
+
+        .output {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Coordenadas</h1>
+        <div id="rectangular-section">
+            <h2>Rectangulares a Polares</h2>
+            <input type="number" id="x" placeholder="X" step="any">
+            <input type="number" id="y" placeholder="Y" step="any">
+            <button onclick="convertToPolar()">Convertir a Polares</button>
+            <div id="polar-output" class="output"></div>
+        </div>
+        <hr>
+        <div id="polar-section">
+            <h2>Polares a Rectangulares</h2>
+            <input type="number" id="r" placeholder="R" step="any">
+            <input type="number" id="theta" placeholder="Theta (en grados)" step="any">
+            <button onclick="convertToRectangular()">Convertir a Rectangulares</button>
+            <div id="rectangular-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function convertToPolar() {
+            const x = parseFloat(document.getElementById('x').value);
+            const y = parseFloat(document.getElementById('y').value);
+            const r = Math.sqrt(x * x + y * y);
+            const theta = Math.atan2(y, x) * (180 / Math.PI);
+
+            document.getElementById('polar-output').innerText = `R: ${r.toFixed(2)}, Theta: ${theta.toFixed(2)}°`;
+        }
+
+        function convertToRectangular() {
+            const r = parseFloat(document.getElementById('r').value);
+            const theta = parseFloat(document.getElementById('theta').value) * (Math.PI / 180);
+            const x = r * Math.cos(theta);
+            const y = r * Math.sin(theta);
+
+            document.getElementById('rectangular-output').innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
